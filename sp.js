@@ -17,14 +17,14 @@ let token = "";
 			'Authorization' : 'Basic ' + btoa(clientId + ':' + clientSecret)
 
 		},
-		body: 'grant_type=client_credentials'	
+		body: 'grant_type=client_credentials'
 
 	});
 
 	const data = await result.json();
 	return data.access_token;
 
-	
+
 
 }*/
 
@@ -41,7 +41,7 @@ const _getToken = async () =>{
 				'Authorization' : 'Basic ' + btoa(clientId + ':' + clientSecret)
 
 			},
-			body: 'grant_type=client_credentials'	
+			body: 'grant_type=client_credentials'
 
 		});
 
@@ -54,7 +54,7 @@ const _getToken = async () =>{
 
 	}
 
-	
+
 
 
 
@@ -142,7 +142,7 @@ const getIdArtist = async (name) => {
 	})
 	.then(response => response.json())
 	.then(response =>{
-  	
+
   		// console.log("response", response.artists.items);
 
   		const artist =  response.artists.items;
@@ -176,7 +176,7 @@ const getIdArtist1 = async (name) => {
 		  	}
 
 		})
-		
+
 		const data = await response.json();
 
 		// console.log("data", data.artists.items[0].id);
@@ -185,14 +185,83 @@ const getIdArtist1 = async (name) => {
 
 
 
-		
+
 	} catch(error) {
-		
+
 		console.log(error);
 
 	}
 
-	
+
 }
 
-getIdArtist1("taylor%20swift").then((value)=>console.log("id", value));
+// getIdArtist1("taylor%20swift").then((value)=>console.log("id", value));
+
+
+const getAlbumnsidArtist = async (name) =>{
+
+
+ 	try {
+
+ 		const token    = await _getToken();
+ 		const idArtist = await getIdArtist1(name);
+
+ 		const response = await fetch(`https://api.spotify.com/v1/artists/${idArtist}/albums`,{
+
+ 			method: "GET",
+			headers: {
+		    Authorization: `Bearer ${token}`
+		  	}
+
+ 		})
+
+ 		const data = await response.json();
+
+ 		// console.log("data", data.items);
+
+ 		data.items.forEach((value, index, array)=>{
+
+ 			console.log("album", value.name);
+
+ 		})
+
+
+ 	} catch(error) {
+
+ 		console.log(error);
+ 	}
+
+}
+
+// getAlbumnsidArtist("taylor%20swift");
+
+
+const getAlbumId = async (name) =>{
+
+	try {
+		const token = await _getToken();
+
+		const response = await fetch(`https://api.spotify.com/v1/search?q=${name}&type=album`, {
+
+			method: "GET",
+
+			headers: {
+			ContentType: 'application/json',
+		    Authorization: `Bearer ${token}`
+		  	}
+
+		})
+
+		const data = await response.json();
+
+		console.log("data", data);
+
+	} catch(error) {
+
+		console.log(error);
+
+	}
+
+}
+
+getAlbumId("speak%now");
