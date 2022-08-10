@@ -244,7 +244,7 @@ const getAlbumId = async (name) =>{
 		const response = await fetch(`https://api.spotify.com/v1/search?q=${name}&type=album`, {
 
 			method: "GET",
-
+		    mode: 'cors',
 			headers: {
 			ContentType: 'application/json',
 		    Authorization: `Bearer ${token}`
@@ -265,3 +265,7 @@ const getAlbumId = async (name) =>{
 }
 
 getAlbumId("speak%now");
+// mode: 'no-cors', https://ajaxhispano.com/ask/origen-http-localhost3000-no-esta-permitido-por-access-control-allow-origin-17092/
+
+
+
