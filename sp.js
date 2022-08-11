@@ -244,7 +244,7 @@ const getAlbumId = async (name) =>{
 		const response = await fetch(`https://api.spotify.com/v1/search?q=${name}&type=album`, {
 
 			method: "GET",
-		    mode: 'cors',
+			mode: 'no-cors',
 			headers: {
 			ContentType: 'application/json',
 		    Authorization: `Bearer ${token}`
@@ -264,8 +264,107 @@ const getAlbumId = async (name) =>{
 
 }
 
-getAlbumId("speak%now");
+// getAlbumId("speak%now");
 // mode: 'no-cors', https://ajaxhispano.com/ask/origen-http-localhost3000-no-esta-permitido-por-access-control-allow-origin-17092/
 
+// http://localhost:8080//pruebaspotify/
+
+const topArtist = async () =>{
+
+	try {
+
+		const url = `https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=10&offset=5`;
+
+		const token = await _getToken();
+
+		const response = await fetch(url,{
+
+				method: "GET",
+				headers: {
+			    Authorization: `Bearer ${token}`
+			  	}
+
+		})
+
+		const data = await response.text();
+
+		console.log("data", data);
+
+
+
+	} catch(error) {
+
+		console.log(error);
+	}
+
+
+
+}
+
+// topArtist();
+
+
+const _autToken = async () =>{
+
+	try{
+
+		const link = new URLSearchParams(window.location.search);
+
+		const code = URLSearchParams.getToken("code");
+
+		const result = await fetch('https://accounts.spotify.com/api/token', {
+
+			method: 'POST',
+			headers: {
+
+				'Content-Type' : 'application/x-www-form-urlencoded',
+				'Authorization' : 'Basic ' + btoa(clientId + ':' + clientSecret)
+
+			},
+			body: {
+				   'grant_type': 'client_credentials',
+			       'code': code
+			      }
+
+		});
+
+		const data = await result.json();
+	    // return data.access_token;
+
+	    console.log("data", data);
+
+	} catch(error){
+
+		console.error(error);
+
+	}
+
+
+
+
+}
+
+
+const OAuth = () =>{
+
+	const url =	`https://accounts.spotify.com/authorize?client_id=${clientId}&scope=user-top-read
+	&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fstarted-spotify-api%2F`;
+
+	document.location.href=url;
+
+	_autToken();
+
+}
+
+
+const boton = document.getElementById("probar");
+
+boton.addEventListener("click", OAuth);
+
+
+// https://github.com/spotify/web-api/blob/master/specifications/raml/api.raml
+// https://www.youtube.com/watch?v=yAXoOolPvjU
+
+// https://rdrr.io/cran/spotifyr/man/get_my_top_artists_or_tracks.html
 
 
