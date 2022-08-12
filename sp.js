@@ -365,6 +365,12 @@ boton.addEventListener("click", OAuth);
 // https://github.com/spotify/web-api/blob/master/specifications/raml/api.raml
 // https://www.youtube.com/watch?v=yAXoOolPvjU
 
+
 // https://rdrr.io/cran/spotifyr/man/get_my_top_artists_or_tracks.html
 
+// https://luigicruz.dev/blog/using-spotify-api
 
+https://accounts.spotify.com/authorize?client_id=f6058e5363584ca4ae6b0492d2cd6174&scope=user-read-currently-playing
+	&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fstarted-spotify-api%2F
+
+curl -H "Authorization: Basic ZjYwNThlNTM2MzU4NGNhNGFlNmIwNDkyZDJjZDYxNzQ6OWM4MjU1MGQxNjMxNDk4YmI5OTBkYTQxMDJlOTc1YzE=" -d grant_type=authorization_code -d code=<code> -d redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fstarted-spotify-api%2F https://accounts.spotify.com/api/token
