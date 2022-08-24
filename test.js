@@ -7,10 +7,12 @@ const boton = document.getElementById("probar");
 
 boton.addEventListener("click", ()=>{
 
-   const url = `https://accounts.spotify.com/authorize?client_id=${client_id}&scope=user-top-read
+   const url = `https://accounts.spotify.com/authorize?client_id=${client_id}&scope=user-read-recently-played%20user-top-read
   &response_type=code&redirect_uri=${redirect_uri}`;
 
   document.location.href=url;
+
+  // user-top-read
 
 })
 
@@ -140,5 +142,44 @@ const getTopTracks = async () =>{
 
 }
 
-getTopTracks();
+// getTopTracks();
 
+/*escuchando receintemente*/
+
+const recentlyTracks = async () =>{
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const code      = urlParams.get('code');
+
+  if (code != null){
+
+      try {
+
+        const access_token = await getAccessToken();
+
+        const result = await fetch(`https://api.spotify.com/v1/me/player/recently-played?limit=10&after=1661277600000`,{
+
+             method: 'GET',
+             headers:{
+
+                 Authorization: `Bearer ${access_token}`
+
+             }
+
+        });
+
+         const data = await result.json();
+
+         console.log("recentlyTracks", data);
+
+      } catch(e) {
+
+        console.log(e);
+
+      }
+
+  }
+
+}
+
+recentlyTracks();
