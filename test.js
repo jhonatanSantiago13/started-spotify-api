@@ -182,4 +182,55 @@ const recentlyTracks = async () =>{
 
 }
 
-recentlyTracks();
+// recentlyTracks();
+
+/*const   date = new Date("08/23/2022 18:00:00"); // some mock date
+const   milliseconds = date.getTime();
+
+console.log("milliseconds", milliseconds);*/
+
+
+/*Date.now()
+
+new Date(1381216317325);*/
+
+
+/*const dateStr = '08/23/2022 18:00:00 GMT';
+
+const date = new Date(dateStr);
+console.log(date); // 👉️ Wed Jun 22 2022
+
+const timestampInMs = date.getTime();
+
+const unixTimestamp = Math.floor(date.getTime() / 1000);
+console.log(unixTimestamp); // 👉️ 1655856000*/
+
+/*const tiempoTranscurrido = Date.now();
+const hoy = new Date(tiempoTranscurrido);
+
+console.log(hoy.toUTCString()); // "Sat, 13 Jun 2020 18:30:00 GMT"*/
+
+// crea un nuevo objeto `Date`
+/*var today = new Date();
+
+// obtener la fecha y la hora
+var now = today.toLocaleString();
+console.log(now);*/
+
+/*var MyDate = new Date();
+console.log(MyDate);
+
+var MyDate = new Date();
+
+var MyString = MyDate.toTimeString();
+
+var MyOffset = MyString.slice(9,17);
+console.log(MyOffset);*/
+
+
+const createDate = (fecha) =>{
+
+
+
+}
+
