@@ -218,19 +218,99 @@ var now = today.toLocaleString();
 console.log(now);*/
 
 /*var MyDate = new Date();
-console.log(MyDate);
+console.log(MyDate);*/
 
-var MyDate = new Date();
+
+
+/*OBTENER LA ZONA HORARIA*/
+
+/*var MyDate = new Date();
 
 var MyString = MyDate.toTimeString();
 
 var MyOffset = MyString.slice(9,17);
 console.log(MyOffset);*/
 
+// https://www.epochconverter.com/
 
-const createDate = (fecha) =>{
 
+const createDate = async (fecha) =>{
 
+      try {
+
+        const localdate = new Date();
+
+        const MyString = localdate.toTimeString();
+
+        const MyOffset = MyString.slice(9,17);
+
+        fecha += ` ${MyOffset}`;
+
+        const date = new Date(fecha);
+
+        const timestampInMs = date.getTime();
+
+        const unixTimestamp = Math.floor(date.getTime() / 1000);
+
+        return unixTimestamp;
+
+      } catch(e) {
+
+        console.log(e);
+
+      }
 
 }
+
+// createDate("08/23/2022 18:00:00").then((result)=> console.log(result));
+
+const recentlyTracks1 = async () =>{
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const code      = urlParams.get('code');
+
+  if (code != null){
+
+      try {
+
+        const access_token = await getAccessToken();
+
+        const fechaUnix = await createDate("09/01/2022 18:00:00");
+
+        const result = await fetch(`https://api.spotify.com/v1/me/player/recently-played?limit=10&after=${fechaUnix}`,{
+
+             method: 'GET',
+             headers:{
+
+                 Authorization: `Bearer ${access_token}`
+
+             }
+
+        });
+
+         const data = await result.json();
+
+         console.log("recentlyTracks", data);
+
+      } catch(e) {
+
+        console.log(e);
+
+      }
+
+  }
+
+}
+
+recentlyTracks1();
+
+/*https://jmperezperez.medium.com/playing-with-the-spotify-connect-api-f5c8cb62a849
+
+https://github.com/JMPerez/spotify-player
+
+https://developer.spotify.com/documentation/web-playback-sdk/
+
+https://developer.spotify.com/documentation/web-playback-sdk/quick-start/#authenticating-with-spotify
+
+*/
 
