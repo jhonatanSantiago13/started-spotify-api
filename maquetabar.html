@@ -58,7 +58,6 @@
 
 <script>
 
-
 	/*=============================================
 	CODIGOS DE ACCESO
 	=============================================*/
@@ -98,7 +97,7 @@
 	    const urlParams = new URLSearchParams(window.location.search);
 	    const code = urlParams.get('code');
 
-	    if (code != null) {
+	    // if (code != null) {
 
 	         try {
 
@@ -121,9 +120,11 @@
 
 	           const data = await result.json();
 
-	           // console.log("refresh_token", data);
+	           // console.log("refresh_token", data.refresh_token);
 
-	           return data.refresh_token;
+	           // return data.refresh_token;
+
+	           localStorage.setItem('refresh_token', data.refresh_token);
 
 	         } catch(e) {
 
@@ -131,7 +132,7 @@
 
 	         }
 
-	    }
+	    // }
 
 	}
 
@@ -146,11 +147,13 @@
 		  const urlParams = new URLSearchParams(window.location.search);
 		  const code      = urlParams.get('code');
 
-		  if (code != null) {
+		  // if (code != null) {
 
 		        try {
 
-		           const refresh_token = await _autToken();
+		           // const refresh_token = await _autToken();
+
+		           const refresh_token = localStorage.getItem("refresh_token");
 
 		           const body = new URLSearchParams();
 		           body.append("grant_type", "refresh_token");
@@ -183,9 +186,11 @@
 
 		        }
 
-		  }
+		  // }
 
 	}
+
+	// getAccessToken();
 
 	/*=============================================
 	Obtener estado de reproducción
@@ -362,14 +367,18 @@
 
 		const percentStart = (startMS * 100) / durationMS;
 
+
 		const avanced = document.getElementById("avanced");
 
-		avanced.style.width = percentStart+'%';
+		avanced.style.width = Math.round(percentStart)+'%';
 
 		const elem  = document.getElementById("avanced");
   		let   width = percentStart;
 
-  		if(state == "playing"){
+  		/*console.log("width", Math.round(width));
+  		console.log("state", state);*/
+
+  		/*if(state == "playing"){
 
   			const id	= setInterval(frame, durationMS / 100);
 
@@ -389,7 +398,7 @@
 
 	  		}
 
-	  	}
+	  	}*/
 
 	}
 
@@ -449,9 +458,9 @@
 	}
 
 
-playingNow();
+// playingNow();
 
-// let paying = setInterval(playingNow, 1000);
+let paying = setInterval(playingNow, 1000);
 
 
 
