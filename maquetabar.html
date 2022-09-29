@@ -99,44 +99,52 @@
 
 	    // if (code != null) {
 
-	         try {
+	    	if (localStorage.getItem("refresh_token") == null || localStorage.getItem("refresh_token") == ""){
 
-	           const body = new URLSearchParams();
-	           body.append("grant_type", "authorization_code");
-	           body.append("redirect_uri", 'http://localhost:8080/started-spotify-api/maquetabar.html');
-	           body.append("code", code);
-	           const result = await fetch(`https://accounts.spotify.com/api/token`,{
 
-	             method: 'POST',
-	             headers: {
+	    		try {
 
-	                'Content-Type' : 'application/x-www-form-urlencoded',
-	                'Authorization' : 'Basic ' + btoa(client_id + ':' + client_secret)
+	          		   const body = new URLSearchParams();
+			           body.append("grant_type", "authorization_code");
+			           body.append("redirect_uri", 'http://localhost:8080/started-spotify-api/maquetabar.html');
+			           body.append("code", code);
+			           const result = await fetch(`https://accounts.spotify.com/api/token`,{
 
-	            },
-	            body: body
+			             method: 'POST',
+			             headers: {
 
-	           });
+			                'Content-Type' : 'application/x-www-form-urlencoded',
+			                'Authorization' : 'Basic ' + btoa(client_id + ':' + client_secret)
 
-	           const data = await result.json();
+			            },
+			            body: body
 
-	           // console.log("refresh_token", data.refresh_token);
+			           });
 
-	           // return data.refresh_token;
+			           const data = await result.json();
 
-	           localStorage.setItem('refresh_token', data.refresh_token);
+			           // console.log("refresh_token", data.refresh_token);
 
-	         } catch(e) {
+			           // return data.refresh_token;
+
+			           localStorage.setItem('refresh_token', data.refresh_token);
+
+	         	} catch(e) {
 
 	             console.log(e);
 
-	         }
+	         	}
+
+
+	    	}
+
+
 
 	    // }
 
 	}
 
-	// _autToken();
+	_autToken();
 
 	/*=============================================
 	CÓDIGO DE ACCESO
@@ -459,6 +467,7 @@
 
 
 // playingNow();
+
 
 let paying = setInterval(playingNow, 1000);
 
